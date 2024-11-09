@@ -97,9 +97,9 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
         </div>
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto min-w-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 overflow-x-auto min-w-0">
             {columns.map((column) => (
-              <div key={column.id} className="min-w-[280px]">
+              <div key={column.id} className="min-w-[300px]">
                 <h2 className="font-semibold mb-4">
                   {column.title} ({deals[column.id].length})
                 </h2>
@@ -108,7 +108,7 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={`space-y-4 min-h-[200px] p-4 rounded-lg ${
+                      className={`space-y-4 min-h-[200px] p-6 rounded-lg ${
                         snapshot.isDraggingOver ? "bg-gray-50" : "bg-gray-100/50"
                       }`}
                     >
@@ -120,7 +120,7 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               className={`p-4 cursor-move bg-white ${
-                                snapshot.isDragging ? "shadow-lg" : "hover:shadow-md"
+                                snapshot.isDraggingOver ? "shadow-lg" : "hover:shadow-md"
                               } transition-shadow`}
                             >
                               <h3 className="font-medium">{deal.title}</h3>

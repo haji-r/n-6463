@@ -19,9 +19,11 @@ const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex relative">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <main className={`transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'} p-8`}>
+      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
+        isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
+      }`}>
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Contacts</h1>

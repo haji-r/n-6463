@@ -5,18 +5,23 @@ import { Input } from "@/components/ui/input";
 import { Search, Plus } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
-const mockContacts = [
-  { id: 1, name: "John Doe", email: "john@example.com", company: "Tech Corp", role: "CEO" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", company: "Design Co", role: "Designer" },
-];
+interface ContactsProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
 
-const Contacts = () => {
+const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
   const [search, setSearch] = useState("");
+
+  const mockContacts = [
+    { id: 1, name: "John Doe", email: "john@example.com", company: "Tech Corp", role: "CEO" },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", company: "Design Co", role: "Designer" },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-      <main className="transition-all duration-300 ml-[60px] lg:ml-64 p-8">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'} p-8`}>
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Contacts</h1>

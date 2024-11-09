@@ -3,11 +3,13 @@ import DashboardCard from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
 import DashboardBarChart from "@/components/DashboardBarChart";
 import Navbar from "@/components/Navbar";
-import { useState } from "react";
 
-const Index = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+interface IndexProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
 
+const Index = ({ isCollapsed, setIsCollapsed }: IndexProps) => {
   return (
     <div className="min-h-screen bg-white">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />

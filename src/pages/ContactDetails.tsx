@@ -3,7 +3,12 @@ import { Card } from "@/components/ui/card";
 import { Mail, Phone, Building, MapPin } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
-const ContactDetails = () => {
+interface ContactDetailsProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
+
+const ContactDetails = ({ isCollapsed, setIsCollapsed }: ContactDetailsProps) => {
   const { id } = useParams();
 
   const contact = {
@@ -21,8 +26,8 @@ const ContactDetails = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-      <main className="transition-all duration-300 ml-[60px] lg:ml-64 p-8">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'} p-8`}>
         <div className="mb-8">
           <h1 className="text-3xl font-bold">{contact.name}</h1>
           <p className="text-gray-600 mt-1">{contact.role} at {contact.company}</p>

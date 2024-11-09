@@ -3,18 +3,12 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Card } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 
-type Deal = {
-  id: string;
-  title: string;
-  value: string;
-  company: string;
-};
+interface DealsProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
 
-type DealsState = {
-  [key: string]: Deal[];
-};
-
-const Deals = () => {
+const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
   const [deals, setDeals] = useState<DealsState>({
     lead: [
       { id: "1", title: "Enterprise Deal", value: "$50,000", company: "Tech Corp" },
@@ -78,8 +72,8 @@ const Deals = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-      <main className="transition-all duration-300 ml-[60px] lg:ml-64 p-8">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'} p-8`}>
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Deals Pipeline</h1>
           <p className="text-gray-600 mt-1">Track and manage your deals</p>

@@ -1,68 +1,53 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, PieChart, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Users, PieChart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const isActive = (path: string) => location.pathname === path;
   
   return (
-    <aside className={cn(
-      "fixed left-0 top-0 h-full border-r bg-white transition-all duration-300",
-      isCollapsed ? "w-16" : "w-64"
-    )}>
-      <nav className="p-4 flex flex-col h-full">
-        <div className="mb-8 flex items-center justify-between">
-          {!isCollapsed && <h1 className="text-2xl font-bold text-primary">CRM</h1>}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            {isCollapsed ? (
-              <ChevronRight className="w-4 h-4" />
-            ) : (
-              <ChevronLeft className="w-4 h-4" />
-            )}
-          </button>
+    <div className="fixed left-0 top-0 h-full flex">
+      <nav className="w-64 bg-white p-4">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-primary">CRM System</h1>
         </div>
         
         <div className="space-y-2">
           <Link
             to="/"
-            className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 rounded-lg transition-colors ${
+            className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
               isActive("/") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <LayoutDashboard className="w-4 h-4 flex-shrink-0" />
-            {!isCollapsed && <span>Dashboard</span>}
+            <LayoutDashboard className="h-5 w-5" />
+            <span>Dashboard</span>
           </Link>
           
           <Link
             to="/contacts"
-            className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 rounded-lg transition-colors ${
+            className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
               isActive("/contacts") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <Users className="w-4 h-4 flex-shrink-0" />
-            {!isCollapsed && <span>Contacts</span>}
+            <Users className="h-5 w-5" />
+            <span>Contacts</span>
           </Link>
           
           <Link
             to="/deals"
-            className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} p-3 rounded-lg transition-colors ${
+            className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
               isActive("/deals") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <PieChart className="w-4 h-4 flex-shrink-0" />
-            {!isCollapsed && <span>Deals</span>}
+            <PieChart className="h-5 w-5" />
+            <span>Deals</span>
           </Link>
         </div>
       </nav>
-    </aside>
+      <Separator orientation="vertical" className="h-full" />
+    </div>
   );
 };
 

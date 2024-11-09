@@ -2,12 +2,15 @@ import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, PieChart, ChevronLeft, ChevronRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-const Navbar = () => {
+interface NavbarProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
+
+const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const isActive = (path: string) => location.pathname === path;
   

@@ -8,7 +8,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="ml-64 p-8">
+      <main className="transition-all duration-300 ml-[60px] lg:ml-64 p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-gray-600 mt-1">Welcome back! Here's your overview.</p>

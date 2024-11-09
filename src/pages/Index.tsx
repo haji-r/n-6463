@@ -3,34 +3,12 @@ import DashboardCard from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
 import DashboardBarChart from "@/components/DashboardBarChart";
 import Navbar from "@/components/Navbar";
-import { useState, useEffect } from "react";
 
 const Index = () => {
-  const [sidebarWidth, setSidebarWidth] = useState("16rem"); // 64px = 16rem
-
-  // Update sidebar width when clicking the collapse button
-  useEffect(() => {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.target instanceof HTMLElement) {
-          const width = mutation.target.offsetWidth;
-          setSidebarWidth(`${width}px`);
-        }
-      });
-    });
-
-    const navbar = document.querySelector('nav');
-    if (navbar) {
-      observer.observe(navbar, { attributes: true });
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main style={{ marginLeft: sidebarWidth }} className="p-8 transition-all duration-300">
+      <main className="transition-all duration-300 pl-[64px] lg:pl-64 p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-gray-600 mt-1">Welcome back! Here's your overview.</p>

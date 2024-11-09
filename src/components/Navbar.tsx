@@ -11,11 +11,11 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
   
   return (
-    <div className={cn(
-      "fixed left-0 top-0 h-full flex transition-all duration-300",
+    <aside className={cn(
+      "fixed left-0 top-0 h-full border-r bg-white transition-all duration-300",
       isCollapsed ? "w-16" : "w-64"
     )}>
-      <nav className="bg-white p-4 flex flex-col w-full relative">
+      <nav className="p-4 flex flex-col h-full">
         <div className="mb-8 flex items-center justify-between">
           {!isCollapsed && <h1 className="text-2xl font-bold text-primary">CRM</h1>}
           <button
@@ -23,9 +23,9 @@ const Navbar = () => {
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             {isCollapsed ? (
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="w-4 h-4" />
             ) : (
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="w-4 h-4" />
             )}
           </button>
         </div>
@@ -37,7 +37,7 @@ const Navbar = () => {
               isActive("/") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <LayoutDashboard className="h-5 w-5" />
+            <LayoutDashboard className="w-4 h-4 flex-shrink-0" />
             {!isCollapsed && <span>Dashboard</span>}
           </Link>
           
@@ -47,7 +47,7 @@ const Navbar = () => {
               isActive("/contacts") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <Users className="h-5 w-5" />
+            <Users className="w-4 h-4 flex-shrink-0" />
             {!isCollapsed && <span>Contacts</span>}
           </Link>
           
@@ -57,13 +57,12 @@ const Navbar = () => {
               isActive("/deals") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
             }`}
           >
-            <PieChart className="h-5 w-5" />
+            <PieChart className="w-4 h-4 flex-shrink-0" />
             {!isCollapsed && <span>Deals</span>}
           </Link>
         </div>
       </nav>
-      <Separator orientation="vertical" className="h-full" />
-    </div>
+    </aside>
   );
 };
 

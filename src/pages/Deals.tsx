@@ -3,6 +3,19 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Card } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 
+interface Deal {
+  id: string;
+  title: string;
+  value: string;
+  company: string;
+}
+
+interface DealsState {
+  lead: Deal[];
+  negotiation: Deal[];
+  closed: Deal[];
+}
+
 interface DealsProps {
   isCollapsed: boolean;
   setIsCollapsed: (value: boolean) => void;
@@ -73,7 +86,9 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
   return (
     <div className="min-h-screen bg-white">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <main className={`transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'} p-8`}>
+      <main className={`transition-all duration-300 ${
+        isCollapsed ? 'sm:ml-[60px]' : 'sm:ml-64'
+      } p-8 w-full`}>
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Deals Pipeline</h1>
           <p className="text-gray-600 mt-1">Track and manage your deals</p>

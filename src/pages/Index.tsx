@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <main className="ml-64 p-8">
         <div className="mb-8">

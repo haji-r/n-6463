@@ -8,14 +8,13 @@ import Navbar from "@/components/Navbar";
 const mockContacts = [
   { id: 1, name: "John Doe", email: "john@example.com", company: "Tech Corp", role: "CEO" },
   { id: 2, name: "Jane Smith", email: "jane@example.com", company: "Design Co", role: "Designer" },
-  // Add more mock contacts as needed
 ];
 
 const Contacts = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <main className="ml-64 p-8">
         <div className="flex justify-between items-center mb-8">

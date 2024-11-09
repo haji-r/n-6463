@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 const ContactDetails = () => {
   const { id } = useParams();
 
-  // Mock data - in a real app, this would come from an API
   const contact = {
     name: "John Doe",
     email: "john@example.com",
@@ -21,7 +20,7 @@ const ContactDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <main className="ml-64 p-8">
         <div className="mb-8">

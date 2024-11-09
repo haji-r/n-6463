@@ -37,39 +37,21 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
+    if (!destination) return;
+    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
-    // Dropped outside the list
-    if (!destination) {
-      return;
-    }
-
-    // Same position
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    ) {
-      return;
-    }
-
-    // Moving within the same column
     if (source.droppableId === destination.droppableId) {
       const column = Array.from(deals[source.droppableId]);
       const [removed] = column.splice(source.index, 1);
       column.splice(destination.index, 0, removed);
-
-      setDeals({
-        ...deals,
-        [source.droppableId]: column,
-      });
+      setDeals({ ...deals, [source.droppableId]: column });
       return;
     }
 
-    // Moving from one column to another
     const sourceColumn = Array.from(deals[source.droppableId]);
     const destColumn = Array.from(deals[destination.droppableId]);
     const [removed] = sourceColumn.splice(source.index, 1);
     destColumn.splice(destination.index, 0, removed);
-
     setDeals({
       ...deals,
       [source.droppableId]: sourceColumn,
@@ -97,9 +79,9 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
         </div>
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 overflow-x-auto min-w-0">
+          <div className="flex flex-col lg:flex-row gap-6">
             {columns.map((column) => (
-              <div key={column.id} className="min-w-[300px]">
+              <div key={column.id} className="flex-1 min-w-0">
                 <h2 className="font-semibold mb-4">
                   {column.title} ({deals[column.id].length})
                 </h2>
@@ -108,7 +90,7 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={`space-y-4 min-h-[200px] p-6 rounded-lg ${
+                      className={`space-y-4 min-h-[200px] p-4 rounded-lg ${
                         snapshot.isDraggingOver ? "bg-gray-50" : "bg-gray-100/50"
                       }`}
                     >

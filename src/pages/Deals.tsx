@@ -1,21 +1,81 @@
+import { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Card } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 
-const mockDeals = {
-  "lead": [
-    { id: "1", title: "Enterprise Deal", value: "$50,000", company: "Tech Corp" },
-    { id: "2", title: "Software License", value: "$25,000", company: "StartUp Inc" },
-  ],
-  "negotiation": [
-    { id: "3", title: "Consulting Project", value: "$30,000", company: "Consulting Co" },
-  ],
-  "closed": [
-    { id: "4", title: "Training Program", value: "$15,000", company: "Education Ltd" },
-  ],
+type Deal = {
+  id: string;
+  title: string;
+  value: string;
+  company: string;
+};
+
+type DealsState = {
+  [key: string]: Deal[];
 };
 
 const Deals = () => {
+  const [deals, setDeals] = useState<DealsState>({
+    lead: [
+      { id: "1", title: "Enterprise Deal", value: "$50,000", company: "Tech Corp" },
+      { id: "2", title: "Software License", value: "$25,000", company: "StartUp Inc" },
+    ],
+    negotiation: [
+      { id: "3", title: "Consulting Project", value: "$30,000", company: "Consulting Co" },
+    ],
+    closed: [
+      { id: "4", title: "Training Program", value: "$15,000", company: "Education Ltd" },
+    ],
+  });
+
+  const onDragEnd = (result: any) => {
+    const { source, destination } = result;
+
+    // Dropped outside the list
+    if (!destination) {
+      return;
+    }
+
+    // Same position
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    // Moving within the same column
+    if (source.droppableId === destination.droppableId) {
+      const column = Array.from(deals[source.droppableId]);
+      const [removed] = column.splice(source.index, 1);
+      column.splice(destination.index, 0, removed);
+
+      setDeals({
+        ...deals,
+        [source.droppableId]: column,
+      });
+      return;
+    }
+
+    // Moving from one column to another
+    const sourceColumn = Array.from(deals[source.droppableId]);
+    const destColumn = Array.from(deals[destination.droppableId]);
+    const [removed] = sourceColumn.splice(source.index, 1);
+    destColumn.splice(destination.index, 0, removed);
+
+    setDeals({
+      ...deals,
+      [source.droppableId]: sourceColumn,
+      [destination.droppableId]: destColumn,
+    });
+  };
+
+  const columns = [
+    { id: "lead", title: "Lead" },
+    { id: "negotiation", title: "Negotiation" },
+    { id: "closed", title: "Closed Won" },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -25,46 +85,50 @@ const Deals = () => {
           <p className="text-gray-600 mt-1">Track and manage your deals</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <h2 className="font-semibold mb-4">Lead ({mockDeals.lead.length})</h2>
-            <div className="space-y-4">
-              {mockDeals.lead.map((deal) => (
-                <Card key={deal.id} className="p-4 cursor-pointer hover:shadow-lg transition-shadow">
-                  <h3 className="font-medium">{deal.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{deal.company}</p>
-                  <p className="text-lg font-semibold text-primary mt-2">{deal.value}</p>
-                </Card>
-              ))}
-            </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {columns.map((column) => (
+              <div key={column.id}>
+                <h2 className="font-semibold mb-4">
+                  {column.title} ({deals[column.id].length})
+                </h2>
+                <Droppable droppableId={column.id}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className={`space-y-4 min-h-[200px] p-4 rounded-lg ${
+                        snapshot.isDraggingOver ? "bg-gray-50" : "bg-gray-100/50"
+                      }`}
+                    >
+                      {deals[column.id].map((deal, index) => (
+                        <Draggable key={deal.id} draggableId={deal.id} index={index}>
+                          {(provided, snapshot) => (
+                            <Card
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className={`p-4 cursor-move bg-white ${
+                                snapshot.isDragging ? "shadow-lg" : "hover:shadow-md"
+                              } transition-shadow`}
+                            >
+                              <h3 className="font-medium">{deal.title}</h3>
+                              <p className="text-sm text-gray-600 mt-1">{deal.company}</p>
+                              <p className="text-lg font-semibold text-primary mt-2">
+                                {deal.value}
+                              </p>
+                            </Card>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </div>
+            ))}
           </div>
-
-          <div>
-            <h2 className="font-semibold mb-4">Negotiation ({mockDeals.negotiation.length})</h2>
-            <div className="space-y-4">
-              {mockDeals.negotiation.map((deal) => (
-                <Card key={deal.id} className="p-4 cursor-pointer hover:shadow-lg transition-shadow">
-                  <h3 className="font-medium">{deal.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{deal.company}</p>
-                  <p className="text-lg font-semibold text-primary mt-2">{deal.value}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="font-semibold mb-4">Closed Won ({mockDeals.closed.length})</h2>
-            <div className="space-y-4">
-              {mockDeals.closed.map((deal) => (
-                <Card key={deal.id} className="p-4 cursor-pointer hover:shadow-lg transition-shadow">
-                  <h3 className="font-medium">{deal.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{deal.company}</p>
-                  <p className="text-lg font-semibold text-primary mt-2">{deal.value}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
+        </DragDropContext>
       </main>
     </div>
   );

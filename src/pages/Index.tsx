@@ -1,6 +1,7 @@
 import { Users, DollarSign, Target, Award } from "lucide-react";
 import DashboardCard from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
+import DashboardBarChart from "@/components/DashboardBarChart";
 import Navbar from "@/components/Navbar";
 
 const Index = () => {
@@ -42,7 +43,7 @@ const Index = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <DashboardChart />
-          <DashboardChart />
+          <DashboardBarChart />
         </div>
       </main>
     </div>

@@ -17,11 +17,43 @@ const DashboardChart = () => {
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} />
+            <defs>
+              <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#000000" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
+            <XAxis 
+              dataKey="name" 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: '#666666', fontSize: 12 }}
+              dy={10}
+            />
+            <YAxis 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: '#666666', fontSize: 12 }}
+              dx={-10}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                background: 'white',
+                border: '1px solid #f0f0f0',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+              }}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="value" 
+              stroke="#000000" 
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 6, fill: '#000000' }}
+              fill="url(#colorValue)"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>

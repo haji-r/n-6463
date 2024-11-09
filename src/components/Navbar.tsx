@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link
           to="/"
           className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-            isActive("/") ? "bg-primary text-white" : "hover:bg-gray-100"
+            isActive("/") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
           }`}
         >
           <LayoutDashboard className="h-5 w-5" />
@@ -26,7 +26,7 @@ const Navbar = () => {
         <Link
           to="/contacts"
           className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-            isActive("/contacts") ? "bg-primary text-white" : "hover:bg-gray-100"
+            isActive("/contacts") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
           }`}
         >
           <Users className="h-5 w-5" />
@@ -36,7 +36,7 @@ const Navbar = () => {
         <Link
           to="/deals"
           className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-            isActive("/deals") ? "bg-primary text-white" : "hover:bg-gray-100"
+            isActive("/deals") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
           }`}
         >
           <PieChart className="h-5 w-5" />

@@ -2,10 +2,10 @@ import { Card } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Q1", deals: 65, revenue: 4000 },
-  { name: "Q2", deals: 45, revenue: 3000 },
-  { name: "Q3", deals: 98, revenue: 7000 },
-  { name: "Q4", deals: 76, revenue: 5000 },
+  { name: "Q1", deals: 42, revenue: 145 },
+  { name: "Q2", deals: 38, revenue: 132 },
+  { name: "Q3", deals: 55, revenue: 187 },
+  { name: "Q4", deals: 47, revenue: 166 },
 ];
 
 const DashboardBarChart = () => {

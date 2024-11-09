@@ -16,7 +16,7 @@ const Contacts = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="transition-all duration-300 ml-[60px] lg:ml-64 p-8">
+      <main className="ml-64 p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Contacts</h1>

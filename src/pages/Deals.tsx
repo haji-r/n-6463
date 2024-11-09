@@ -84,18 +84,20 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-white flex">
+    <div className="min-h-screen bg-white flex relative">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
-        isCollapsed ? 'sm:ml-[60px]' : 'sm:ml-64'
-      }`}>
+      <main 
+        className={`flex-1 p-4 sm:p-8 transition-all duration-300 overflow-x-hidden ${
+          isCollapsed ? 'sm:ml-[60px]' : 'sm:ml-64'
+        }`}
+      >
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Deals Pipeline</h1>
           <p className="text-gray-600 mt-1">Track and manage your deals</p>
         </div>
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto min-w-0">
             {columns.map((column) => (
               <div key={column.id} className="min-w-[280px]">
                 <h2 className="font-semibold mb-4">
@@ -118,7 +120,7 @@ const Deals = ({ isCollapsed, setIsCollapsed }: DealsProps) => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               className={`p-4 cursor-move bg-white ${
-                                snapshot.isDragging ? "shadow-lg" : "hover:shadow-md"
+                                snapshot.isDraggingOver ? "shadow-lg" : "hover:shadow-md"
                               } transition-shadow`}
                             >
                               <h3 className="font-medium">{deal.title}</h3>

@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import Navbar from "@/components/Navbar";
 import { QrCode, Moon, Sun, UserRound } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
+import { EditUserModal } from "@/components/EditUserModal";
 
 interface SettingsProps {
   isCollapsed: boolean;
@@ -14,6 +15,14 @@ interface SettingsProps {
 const Settings = ({ isCollapsed, setIsCollapsed }: SettingsProps) => {
   const [isMFAEnabled, setIsMFAEnabled] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  
+  // Mock user data
+  const mockUser = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "Administrator",
+    joinDate: "April 2024"
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 flex relative">
@@ -30,14 +39,20 @@ const Settings = ({ isCollapsed, setIsCollapsed }: SettingsProps) => {
 
         <div className="max-w-2xl space-y-6">
           <Card className="p-6 dark:bg-gray-800">
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                <UserRound className="w-8 h-8 text-gray-500 dark:text-gray-400" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                  <UserRound className="w-8 h-8 text-gray-500 dark:text-gray-400" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold dark:text-white">{mockUser.name}</h2>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{mockUser.email}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {mockUser.role} • Joined {mockUser.joinDate}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-semibold dark:text-white">User Profile</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Please connect to Supabase to enable user management</p>
-              </div>
+              <EditUserModal user={{ name: mockUser.name, email: mockUser.email }} />
             </div>
           </Card>
 

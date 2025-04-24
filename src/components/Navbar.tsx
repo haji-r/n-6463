@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, PieChart, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -19,12 +20,12 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
       "fixed left-0 top-0 h-full flex transition-all duration-300 z-50",
       isCollapsed ? "w-[60px]" : "w-full sm:w-64"
     )}>
-      <nav className="w-full bg-white p-4 relative">
+      <nav className="w-full bg-background dark:bg-background p-4 relative">
         <div className={cn(
           "mb-8 flex items-center",
           isCollapsed ? "justify-center" : "justify-between"
         )}>
-          {!isCollapsed && <h1 className="text-2xl font-bold text-primary">CRM</h1>}
+          {!isCollapsed && <h1 className="text-2xl font-bold text-primary dark:text-primary">CRM</h1>}
           <Button
             variant="ghost"
             size="icon"
@@ -45,7 +46,9 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
             className={cn(
               "flex items-center p-3 rounded-lg transition-colors",
               isCollapsed ? "justify-center" : "space-x-3",
-              isActive("/") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
+              isActive("/") 
+                ? "bg-accent dark:bg-accent text-accent-foreground dark:text-accent-foreground" 
+                : "hover:bg-muted hover:dark:bg-muted"
             )}
           >
             <LayoutDashboard className="h-5 w-5 flex-shrink-0" />
@@ -57,7 +60,9 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
             className={cn(
               "flex items-center p-3 rounded-lg transition-colors",
               isCollapsed ? "justify-center" : "space-x-3",
-              isActive("/contacts") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
+              isActive("/contacts") 
+                ? "bg-accent dark:bg-accent text-accent-foreground dark:text-accent-foreground" 
+                : "hover:bg-muted hover:dark:bg-muted"
             )}
           >
             <Users className="h-5 w-5 flex-shrink-0" />
@@ -69,7 +74,9 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
             className={cn(
               "flex items-center p-3 rounded-lg transition-colors",
               isCollapsed ? "justify-center" : "space-x-3",
-              isActive("/deals") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
+              isActive("/deals") 
+                ? "bg-accent dark:bg-accent text-accent-foreground dark:text-accent-foreground" 
+                : "hover:bg-muted hover:dark:bg-muted"
             )}
           >
             <PieChart className="h-5 w-5 flex-shrink-0" />
@@ -81,7 +88,9 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
             className={cn(
               "flex items-center p-3 rounded-lg transition-colors",
               isCollapsed ? "justify-center" : "space-x-3",
-              isActive("/settings") ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50"
+              isActive("/settings") 
+                ? "bg-accent dark:bg-accent text-accent-foreground dark:text-accent-foreground" 
+                : "hover:bg-muted hover:dark:bg-muted"
             )}
           >
             <Settings className="h-5 w-5 flex-shrink-0" />
@@ -89,7 +98,7 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
           </Link>
         </div>
       </nav>
-      <Separator orientation="vertical" className="h-full" />
+      <Separator orientation="vertical" className="h-full dark:border-muted" />
     </div>
   );
 };

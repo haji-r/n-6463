@@ -9,6 +9,7 @@ import Contacts from "./pages/Contacts";
 import ContactDetails from "./pages/ContactDetails";
 import Deals from "./pages/Deals";
 import Settings from "./pages/Settings";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/contacts/:id" element={<ContactDetails isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />} />
             <Route path="/deals" element={<Deals isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />} />
             <Route path="/settings" element={<Settings isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

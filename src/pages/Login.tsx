@@ -38,11 +38,13 @@ export default function Login() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    // In a real app, this would check if MFA is enabled for the user
+    // For demo purposes, we're assuming it is and redirecting to MFA verification
     toast({
-      title: "Login successful",
-      description: "Welcome back!",
+      title: "Verification required",
+      description: "Please verify your identity to continue.",
     });
-    navigate("/");
+    navigate("/mfa-verify");
   }
 
   return (

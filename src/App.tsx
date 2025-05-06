@@ -12,6 +12,7 @@ import Deals from "./pages/Deals";
 import Settings from "./pages/Settings";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import MFAVerify from "./pages/MFAVerify";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/settings" element={<Settings isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/mfa-verify" element={<MFAVerify />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

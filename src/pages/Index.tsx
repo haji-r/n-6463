@@ -1,8 +1,10 @@
+
 import { Users, DollarSign, Target, Award } from "lucide-react";
 import DashboardCard from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
 import DashboardBarChart from "@/components/DashboardBarChart";
 import Navbar from "@/components/Navbar";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface IndexProps {
   isCollapsed: boolean;
@@ -11,14 +13,17 @@ interface IndexProps {
 
 const Index = ({ isCollapsed, setIsCollapsed }: IndexProps) => {
   return (
-    <div className="min-h-screen bg-white flex relative">
+    <div className="min-h-screen bg-background text-foreground flex relative">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
         isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
       }`}>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-gray-600 mt-1">Welcome back! Here's your overview.</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <p className="text-muted-foreground mt-1">Welcome back! Here's your overview.</p>
+          </div>
+          <ThemeToggle />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

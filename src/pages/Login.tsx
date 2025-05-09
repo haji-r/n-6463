@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -50,9 +51,15 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Welcome Back</h1>
-          <p className="text-muted-foreground mt-2">Log in to your account</p>
+        <div className="text-center flex justify-between items-center">
+          <div className="flex-1"></div>
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
+            <p className="text-muted-foreground mt-2">Log in to your account</p>
+          </div>
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
         </div>
 
         <Form {...form}>

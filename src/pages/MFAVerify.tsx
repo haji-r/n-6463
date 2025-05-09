@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -74,13 +73,9 @@ export default function MFAVerify() {
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <div className="flex justify-between items-center mb-2">
-            <div className="flex-1"></div>
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-1">
+          <div className="flex justify-center mb-2">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
               <Shield className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex-1 flex justify-end">
-              <ThemeToggle />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center">Two-Factor Authentication</CardTitle>

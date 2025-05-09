@@ -1,11 +1,9 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search, Plus } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface ContactsProps {
   isCollapsed: boolean;
@@ -21,7 +19,7 @@ const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex relative">
+    <div className="min-h-screen bg-white flex relative">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
         isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
@@ -29,19 +27,16 @@ const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Contacts</h1>
-            <p className="text-muted-foreground mt-1">Manage your contacts and leads</p>
+            <p className="text-gray-600 mt-1">Manage your contacts and leads</p>
           </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-primary/90 transition-colors">
-              <Plus className="h-5 w-5" />
-              <span>Add Contact</span>
-            </button>
-          </div>
+          <button className="bg-primary text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-primary/90 transition-colors">
+            <Plus className="h-5 w-5" />
+            <span>Add Contact</span>
+          </button>
         </div>
 
         <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
             placeholder="Search contacts..."
             value={search}
@@ -53,10 +48,10 @@ const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockContacts.map((contact) => (
             <Link key={contact.id} to={`/contacts/${contact.id}`}>
-              <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer border bg-card text-card-foreground">
+              <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
                 <h3 className="font-semibold text-lg">{contact.name}</h3>
-                <p className="text-muted-foreground">{contact.email}</p>
-                <div className="mt-4 flex justify-between text-sm text-muted-foreground">
+                <p className="text-gray-600">{contact.email}</p>
+                <div className="mt-4 flex justify-between text-sm text-gray-500">
                   <span>{contact.company}</span>
                   <span>{contact.role}</span>
                 </div>

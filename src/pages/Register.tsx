@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
@@ -59,15 +58,9 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center flex justify-between items-center">
-          <div className="flex-1"></div>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-foreground">Create an Account</h1>
-            <p className="text-muted-foreground mt-2">Sign up to get started</p>
-          </div>
-          <div className="flex-1 flex justify-end">
-            <ThemeToggle />
-          </div>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">Create an Account</h1>
+          <p className="text-muted-foreground mt-2">Sign up to get started</p>
         </div>
 
         <Form {...form}>
@@ -196,4 +189,4 @@ export default function Register() {
       </div>
     </div>
   );
-};
+}

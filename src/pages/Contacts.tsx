@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Plus } from "lucide-react";
+import { Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import AddContactDialog from "@/components/AddContactDialog";
 
 interface ContactsProps {
   isCollapsed: boolean;
@@ -29,10 +31,7 @@ const Contacts = ({ isCollapsed, setIsCollapsed }: ContactsProps) => {
             <h1 className="text-3xl font-bold">Contacts</h1>
             <p className="text-gray-600 mt-1">Manage your contacts and leads</p>
           </div>
-          <button className="bg-primary text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-primary/90 transition-colors">
-            <Plus className="h-5 w-5" />
-            <span>Add Contact</span>
-          </button>
+          <AddContactDialog />
         </div>
 
         <div className="relative mb-6">

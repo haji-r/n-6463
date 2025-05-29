@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UserDetailsModal } from "@/components/UserDetailsModal";
 
 interface UsersProps {
   isCollapsed: boolean;
@@ -230,7 +230,7 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                             Created: {user.createdAt.toLocaleDateString()}
                           </p>
                         </div>
-                        <div className="text-sm">
+                        <div className="flex items-center gap-2">
                           <span className={`px-2 py-1 rounded-full text-xs ${
                             user.role === 'Admin' 
                               ? 'bg-blue-100 text-blue-800' 
@@ -240,6 +240,7 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                           }`}>
                             {user.role}
                           </span>
+                          <UserDetailsModal user={user} />
                         </div>
                       </div>
                     </Card>
@@ -261,7 +262,7 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                           Created: {user.createdAt.toLocaleDateString()}
                         </p>
                       </div>
-                      <div className="text-sm">
+                      <div className="flex items-center gap-2">
                         <span className={`px-2 py-1 rounded-full text-xs ${
                           user.role === 'Admin' 
                             ? 'bg-blue-100 text-blue-800' 
@@ -271,6 +272,7 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                         }`}>
                           {user.role}
                         </span>
+                        <UserDetailsModal user={user} />
                       </div>
                     </div>
                   </Card>

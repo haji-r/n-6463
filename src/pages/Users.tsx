@@ -2,10 +2,17 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface UsersProps {
   isCollapsed: boolean;
@@ -18,7 +25,10 @@ interface User {
   email: string;
   role: string;
   avatar?: string;
+  createdAt: Date;
 }
+
+type FilterPeriod = "today" | "week" | "month" | "3months" | "6months" | "all";
 
 const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
   const [search, setSearch] = useState("");
@@ -26,10 +36,11 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [filterPeriod, setFilterPeriod] = useState<FilterPeriod>("all");
   const observer = useRef<IntersectionObserver | null>(null);
   const lastUserElementRef = useRef<HTMLDivElement>(null);
 
-  // Mock function to generate users
+  // Mock function to generate users with dates
   const fetchUsers = useCallback(async (pageNum: number) => {
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -42,11 +53,17 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
       for (let i = 0; i < 10; i++) {
         const id = startIndex + i + 1;
         if (id <= 50) {
+          // Generate random dates within the last 6 months
+          const now = new Date();
+          const sixMonthsAgo = new Date(now.getTime() - (6 * 30 * 24 * 60 * 60 * 1000));
+          const randomTime = sixMonthsAgo.getTime() + Math.random() * (now.getTime() - sixMonthsAgo.getTime());
+          
           newUsers.push({
             id,
             name: `User ${id}`,
             email: `user${id}@example.com`,
             role: id % 3 === 0 ? "Admin" : id % 3 === 1 ? "Manager" : "User",
+            createdAt: new Date(randomTime),
           });
         }
       }
@@ -56,6 +73,38 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
       users: newUsers,
       hasMore: startIndex + 10 < 50
     };
+  }, []);
+
+  // Function to filter users by date period
+  const filterUsersByPeriod = useCallback((users: User[], period: FilterPeriod) => {
+    if (period === "all") return users;
+    
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    let cutoffDate: Date;
+    
+    switch (period) {
+      case "today":
+        cutoffDate = today;
+        break;
+      case "week":
+        cutoffDate = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+        break;
+      case "month":
+        cutoffDate = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+        break;
+      case "3months":
+        cutoffDate = new Date(today.getTime() - (90 * 24 * 60 * 60 * 1000));
+        break;
+      case "6months":
+        cutoffDate = new Date(today.getTime() - (180 * 24 * 60 * 60 * 1000));
+        break;
+      default:
+        return users;
+    }
+    
+    return users.filter(user => user.createdAt >= cutoffDate);
   }, []);
 
   // Load initial data
@@ -112,8 +161,8 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
     setLoading(false);
   };
 
-  // Filter users based on search
-  const filteredUsers = users.filter(user =>
+  // Filter users based on search and date period
+  const filteredUsers = filterUsersByPeriod(users, filterPeriod).filter(user =>
     user.name.toLowerCase().includes(search.toLowerCase()) ||
     user.email.toLowerCase().includes(search.toLowerCase()) ||
     user.role.toLowerCase().includes(search.toLowerCase())
@@ -132,14 +181,33 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
           </div>
         </div>
 
-        <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-          <Input
-            placeholder="Search users..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
-          />
+        <div className="flex gap-4 mb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+            <Input
+              placeholder="Search users..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            <Select value={filterPeriod} onValueChange={(value: FilterPeriod) => setFilterPeriod(value)}>
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="Filter by date" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Time</SelectItem>
+                <SelectItem value="today">Today</SelectItem>
+                <SelectItem value="week">This Week</SelectItem>
+                <SelectItem value="month">This Month</SelectItem>
+                <SelectItem value="3months">Past 3 Months</SelectItem>
+                <SelectItem value="6months">Past 6 Months</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <ScrollArea className="h-[calc(100vh-220px)] rounded-md border">
@@ -158,6 +226,9 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                         <div className="flex-1">
                           <h3 className="font-medium text-foreground">{user.name}</h3>
                           <p className="text-sm text-muted-foreground">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Created: {user.createdAt.toLocaleDateString()}
+                          </p>
                         </div>
                         <div className="text-sm">
                           <span className={`px-2 py-1 rounded-full text-xs ${
@@ -186,6 +257,9 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
                       <div className="flex-1">
                         <h3 className="font-medium text-foreground">{user.name}</h3>
                         <p className="text-sm text-muted-foreground">{user.email}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Created: {user.createdAt.toLocaleDateString()}
+                        </p>
                       </div>
                       <div className="text-sm">
                         <span className={`px-2 py-1 rounded-full text-xs ${
@@ -223,7 +297,7 @@ const Users = ({ isCollapsed, setIsCollapsed }: UsersProps) => {
             
             {!loading && filteredUsers.length === 0 && (
               <div className="text-center py-10">
-                <p className="text-muted-foreground">No users found</p>
+                <p className="text-muted-foreground">No users found for the selected criteria</p>
               </div>
             )}
           </div>
